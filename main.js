@@ -4,7 +4,7 @@ const maxcreeps = 10;
 
 module.exports.loop = function () {  
 
-    var chenjiecount = Object.keys(Game.creeps).length
+    let chenjiecount = Object.keys(Game.creeps).length
   
     //Game.creeps['zhandouchenjie'].memory.role = 'zhandouchenjie';
     //这行是给组里的元素分配内存去调用role
@@ -19,8 +19,8 @@ module.exports.loop = function () {
         Game.creeps[creepName].memory.role = 'banyunchenjie';
     });
 
-    for(var name in Game.creeps) {  
-        var creep = Game.creeps[name];
+    for(let name in Game.creeps) {  
+        let creep = Game.creeps[name];
         if(creep.memory.role == 'zhandouchenjie') {
             roleZhandouchenjie.run(creep);  
         }
@@ -33,13 +33,13 @@ module.exports.loop = function () {
         getCurrentDateTime();  
 
     function getCurrentDateTime() {    
-        var date = new Date();    
-        var year = date.getFullYear();    
-        var month = ("0" + (date.getMonth() + 1)).slice(-2);    
-        var day = ("0" + date.getDate()).slice(-2);    
-        var hour = ("0" + date.getHours()).slice(-2);    
-        var minute = ("0" + date.getMinutes()).slice(-2);    
-        var second = ("0" + date.getSeconds()).slice(-2);    
+        let date = new Date();    
+        let year = date.getFullYear();    
+        let month = ("0" + (date.getMonth() + 1)).slice(-2);    
+        let day = ("0" + date.getDate()).slice(-2);    
+        let hour = ("0" + date.getHours()).slice(-2);    
+        let minute = ("0" + date.getMinutes()).slice(-2);    
+        let second = ("0" + date.getSeconds()).slice(-2);    
         if (chenjiecount %2 === 0) {
             chenjie = 'banyunchenjie'+ year + month + day + hour + minute + second;
         } else {
@@ -58,3 +58,5 @@ module.exports.loop = function () {
         }
     
 }
+
+const targets = Game.spawns['Spawn1'].room.find(FIND_MY_SPAWNS)
