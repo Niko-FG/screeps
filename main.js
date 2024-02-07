@@ -1,31 +1,32 @@
-var roleBanyunchenjie = require('role.banyunchenjie');
-var roleZhandouchenjie = require('role.zhandouchenjie');
+var roleBuilder = require('role.builder');
+var roleHarvester = require('role.harvester');
 const maxcreeps = 10;
 
 module.exports.loop = function () {  
 
-    let chenjiecount = Object.keys(Game.creeps).length
+    let totalcreeps = Object.keys(Game.creeps).length
   
     //Game.creeps['zhandouchenjie'].memory.role = 'zhandouchenjie';
     //这行是给组里的元素分配内存去调用role
 
-    let creepswithzhandou = Object.keys(Game.creeps).filter(key => key.includes('zhandou'));
-    creepswithzhandou.forEach(creepName => {
-        Game.creeps[creepName].memory.role = 'zhandouchenjie';
-    });
     //用Object.key把数组中的元素都取出来然后用filter筛选出含有zhandou的，forEach是将元素遍历，然后扔进下面那行
-    let creepswithbanyun = Object.keys(Game.creeps).filter(key => key.includes('banyun'));
-    creepswithbanyun.forEach(creepName => {
-        Game.creeps[creepName].memory.role = 'banyunchenjie';
+    let creepswithharvester = Object.keys(Game.creeps).filter(key => key.includes('harvester'));
+    creepswithharvester.forEach(creepName => {
+        Game.creeps[creepName].memory.role = 'harvester';
+    });
+
+    let creepswithbuilder = Object.keys(Game.creeps).filter(key => key.includes('builder'));
+    creepswithbuilder.forEach(creepName => {
+        Game.creeps[creepName].memory.role = 'builder';
     });
 
     for(let name in Game.creeps) {  
         let creep = Game.creeps[name];
-        if(creep.memory.role == 'zhandouchenjie') {
-            roleZhandouchenjie.run(creep);  
+        if(creep.memory.role == 'harvest') {
+            roleHarvester.run(creep);  
         }
-        if(creep.memory.role == 'banyunchenjie') {
-            roleBanyunchenjie.run(creep);  
+        if(creep.memory.role == 'builder') {
+            roleBuilder.run(creep);  
         }
     }
 
@@ -40,23 +41,29 @@ module.exports.loop = function () {
         let hour = ("0" + date.getHours()).slice(-2);    
         let minute = ("0" + date.getMinutes()).slice(-2);    
         let second = ("0" + date.getSeconds()).slice(-2);    
-        if (chenjiecount %2 === 0) {
-            chenjie = 'banyunchenjie'+ year + month + day + hour + minute + second;
+        if (totalcreeps %2 === 0) {
+            otherscreep = 'builder'+ year + month + day + hour + minute + second;
         } else {
-            chenjie = 'zhandouchenjie' + year + month + day + hour + minute + second;
+            otherscreep = 'harvester' + year + month + day + hour + minute + second;
         }
-        return chenjie;
+        return otherscreep;
         }
 
-    if (chenjiecount >= maxcreeps) {  
+    if (totalcreeps >= maxcreeps) {  
         return;  
     }  
-        if (chenjiecount < maxcreeps && chenjiecount %2 === 1) {
-            console.log(Game.spawns['Spawn1'].spawnCreep( [WORK, CARRY, CARRY, CARRY, MOVE], chenjie ));
-        } else (chenjiecount < maxcreeps); {
-            console.log(Game.spawns['Spawn1'].spawnCreep( [WORK, CARRY, MOVE, MOVE, MOVE], chenjie ));
+        if (totalcreeps < maxcreeps && totalcreeps %2 === 1) {
+            Game.spawns['Spawn1'].spawnCreep( [WORK, CARRY, CARRY, CARRY, MOVE], otherscreep );
+        } else (totalcreeps < maxcreeps); {
+            Game.spawns['Spawn1'].spawnCreep( [WORK, CARRY, MOVE, MOVE, MOVE], otherscreep );
         }
     
 }
+Game.spawns.Spawn1.room.createConstructionSite(23,15,STRUCTURE_CONTAINER);
+Game.spawns.Spawn1.room.createConstructionSite(23,16,STRUCTURE_CONTAINER);
+Game.spawns.Spawn1.room.createConstructionSite(23,17,STRUCTURE_CONTAINER);
+Game.spawns.Spawn1.room.createConstructionSite(23,18,STRUCTURE_CONTAINER);
 
-const targets = Game.spawns['Spawn1'].room.find(FIND_MY_SPAWNS)
+//这里写上spawn的坐标
+//const pos_x = 33;
+//const pos_y = 14;
