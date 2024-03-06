@@ -1,6 +1,7 @@
 var roleBuilder = require('role.builder');
 var roleHarvester = require('role.harvester');
-const maxcreeps = 10;
+var roleUpgrader = require('role.upgrader');
+const maxcreeps = 20;
 
 module.exports.loop = function () {  
 
@@ -22,7 +23,7 @@ module.exports.loop = function () {
 
     for(let name in Game.creeps) {  
         let creep = Game.creeps[name];
-        if(creep.memory.role == 'harvest') {
+        if(creep.memory.role == 'harvester') {
             roleHarvester.run(creep);  
         }
         if(creep.memory.role == 'builder') {
@@ -64,6 +65,11 @@ Game.spawns.Spawn1.room.createConstructionSite(23,16,STRUCTURE_CONTAINER);
 Game.spawns.Spawn1.room.createConstructionSite(23,17,STRUCTURE_CONTAINER);
 Game.spawns.Spawn1.room.createConstructionSite(23,18,STRUCTURE_CONTAINER);
 
-//这里写上spawn的坐标
-//const pos_x = 33;
-//const pos_y = 14;
+//new function up() {
+//    let sum = 10;
+//    for (let n = 1 ; n < sum; n++) {
+//        let intergrate = 'upgrader' + n;
+//        Game.spawns['Spawn1'].spawnCreep( [WORK, CARRY, CARRY, MOVE, MOVE, MOVE], 'intergrate' );
+//        Game.creeps['intergrate'].memory.role = 'upgrader';
+//    }
+//}
