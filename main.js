@@ -1,6 +1,7 @@
 var roleBuilder = require('role.builder');
 var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
+var roleClean = require('role.clean');
 const maxcreeps = 20;
 
 //立即执行函数生成10个harvester
@@ -8,7 +9,7 @@ const maxcreeps = 20;
     let sum = 10;
     for (let n = 1 ; n < sum; n++) {
         let intergrate = ('harvester' + n);
-        console.log(Game.spawns['Spawn1'].spawnCreep( [WORK, CARRY, CARRY, MOVE, MOVE, MOVE], 'intergrate' ));
+        Game.spawns['Spawn1'].spawnCreep( [WORK, CARRY, CARRY, MOVE, MOVE, MOVE], 'intergrate' );
         let creepswithintergrate = Object.keys(Game.creeps).filter(key => key.includes('intergrate'));
         creepswithintergrate.forEach(creepName => {
             Game.creeps[creepName].memory.role = 'harvester';
@@ -88,3 +89,10 @@ Game.spawns.Spawn1.room.createConstructionSite(23,15,STRUCTURE_CONTAINER);
 Game.spawns.Spawn1.room.createConstructionSite(23,16,STRUCTURE_CONTAINER);
 Game.spawns.Spawn1.room.createConstructionSite(23,17,STRUCTURE_CONTAINER);
 Game.spawns.Spawn1.room.createConstructionSite(23,18,STRUCTURE_CONTAINER);
+
+for (let n = 0; n < 10000; n ++) {
+    let m = Game.creeps.length;
+    for (let b = 0; b < m; b++ ) {
+        Game.creeps[b].say('1');
+    }
+}

@@ -1,6 +1,6 @@
 //var roleUpgrader = {
 
-    /** @param {Creep} creep **/
+    /* @param {Creep} creep */
 /*    run: function(creep) {
         
         // state switch
